@@ -12,15 +12,13 @@ struct ListNode {
 class Solution {
 public:
 	ListNode* addTwoNumbers(ListNode *l1, ListNode *l2);
-	void push_back(int x, ListNode *node);
-	void print_list(ListNode* node);
 };
 
 ListNode* Solution::addTwoNumbers(ListNode *l1, ListNode *l2)
 {
 	ListNode *now1 = l1, *now2 = l2;
-	ListNode *ans = new ListNode(0);
-	int first = 0;
+	ListNode *ans = new ListNode(-1);
+	ListNode *current = ans;
 	int carry = 0;
 	while (now1 != NULL || now2 != NULL)
 	{
@@ -30,24 +28,31 @@ ListNode* Solution::addTwoNumbers(ListNode *l1, ListNode *l2)
 		int sum = x + y + carry;
 		carry = sum / 10;
 
-		if (first == 0)
+		if(ans->val == -1)
 			ans->val = sum % 10;
 		else
-			Solution::push_back(sum % 10, ans);
+		{
+			ListNode *newNode = new ListNode(sum % 10);
+			current->next = newNode;
+			current = current->next;
+		}
 
 		now1 = (now1 != NULL) ? now1->next : 0;
 		now2 = (now2 != NULL) ? now2->next : 0;
-		first = 1;
 	}
 	if (carry != 0)
-		Solution::push_back(carry, ans);
+	{
+		ListNode *newNode = new ListNode(carry);
+		current->next = newNode;
+	}
 	return ans;
 }
-void Solution::push_back(int x, ListNode *node)
+
+void push_back(int x, ListNode *node)
 {
 	ListNode *newNode = new ListNode(x); // new memory
 
-	if (node == 0)			// ­Ylist¬°ªÅ, ¥OnewNode¬°first
+	if (node == 0)			// è‹¥listç‚ºç©º, ä»¤newNodeç‚ºfirst
 	{
 		node = newNode;
 		return;
@@ -58,9 +63,9 @@ void Solution::push_back(int x, ListNode *node)
 	{
 		current = current->next;
 	}
-	current->next = newNode;	// newNode±µ¦blistªº§ÀºÝ
+	current->next = newNode;	// newNodeæŽ¥åœ¨listçš„å°¾ç«¯
 }
-void Solution::print_list(ListNode* node)
+void print_list(ListNode* node)
 {
 	ListNode *current = node;
 	while (current)
@@ -88,10 +93,10 @@ int main()
 		ListNode *l1 = new ListNode(list1[0]);
 		ListNode *l2 = new ListNode(list2[0]);
 		for (int i = 1; i < list1.size(); i++)
-			ans.push_back(list1[i], l1);
+			push_back(list1[i], l1);
 		for (int i = 1; i < list2.size(); i++)
-			ans.push_back(list2[i], l2);
-		ans.print_list(ans.addTwoNumbers(l1, l2));
+			push_back(list2[i], l2);
+		print_list(ans.addTwoNumbers(l1, l2));
 	}
 	return 0;
 }
