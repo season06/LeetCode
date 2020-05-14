@@ -10,13 +10,13 @@ vector<vector<int>> threeSum(vector<int>& nums)
 	vector<vector<int>> ans;
 	if (nums.size() == 0)  return ans;
 	
-	sort(nums.begin(), nums.end()); // 排序
+	sort(nums.begin(), nums.end()); // sort
 	if (nums[0] > 0) return ans;
 
 	int low = 0, high = 0, n = nums.size();
 	for (int i = 0; i < n - 2; i++)
 	{
-		if (i != 0 && nums[i - 1] == nums[i]) // 重複的跳過
+		if (i != 0 && nums[i - 1] == nums[i]) // skip repeated number
 			continue;
 
 		low = i + 1;	// i, low, , , high
