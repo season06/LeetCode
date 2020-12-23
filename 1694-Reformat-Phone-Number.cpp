@@ -4,39 +4,55 @@
 using namespace std;
 
 /*
-Input: rowIndex = 3
-Output: [1,3,3,1]
+Input: number = "1-23-45 6"
+Output: "123-456"
 
-Input: rowIndex = 0
-Output: [1]
+Input: number = "123 4-567"
+Output: "123-45-67"
+
+Input: number = "123 4-5678"
+Output: "123-456-78"
 */
 
-// binary search
-vector<int> getRow(int rowIndex)
+string reformatNumber(string number)
 {
-	vector<int> ans;
-	ans.push_back(1);
+	string str = "";
+	for (auto n : number)
+		if (isdigit(n)) str += n;
 
-	for (int i = 1; i <= rowIndex; i++)
+	string ans = "";
+	int pos = 0;
+	while (pos < str.size())
 	{
-		vector<int> row(i + 1, 1); // vector init (size, value)
-		for (int j = 1; j < i; j++)
-			row[j] = ans[j - 1] + ans[j];
-		ans = row;
+		int remain = str.size() - pos;
+		if (remain == 4)
+		{
+			ans.insert(ans.size(), str, pos, 2);
+			pos += 2;
+		}
+		else if (remain >= 3)
+		{
+			ans.insert(ans.size(), str, pos, 3);
+			pos += 3;
+		}
+		else
+		{
+			ans.insert(ans.size(), str, pos, remain);
+			break;
+		}
+
+		if (pos != str.size())
+			ans.append("-");
 	}
 	return ans;
 }
 
 int main()
 {
-	int x;
-	while (cin >> x)
+	string str;
+	while (getline(cin, str))
 	{
-		vector<int> ans = getRow(x);
-
-		for (auto num : ans)
-			cout << num << " ";
-		cout << "\n";
+		cout << reformatNumber(str) << "\n";
 	}
 	return 0;
 }
