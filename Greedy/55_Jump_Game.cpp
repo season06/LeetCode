@@ -24,15 +24,15 @@ Output: true
 
 bool canJump(vector<int>& nums)
 {
-	int max = 0;
+	int maxIndex = 0;
 	for (int i = 0; i < nums.size(); i++)
 	{
-		if (i > max)	// if length > max step
+		if (i > maxIndex)	// if length > max step
 			return false;
 
-		max = MAX(nums[i] + i, max);
+		maxIndex = MAX(nums[i] + i, maxIndex);
 
-		if (max >= nums.size() - 1) // if exceed the length of the array
+		if (maxIndex >= nums.size() - 1) // if exceed the length of the array
 			return true;
 	}
 	return true;
