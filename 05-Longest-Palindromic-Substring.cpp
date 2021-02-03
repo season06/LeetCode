@@ -2,6 +2,21 @@
 #include<string>
 using namespace std;
 
+/*
+Input: s = "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+
+Input: s = "cbbd"
+Output: "bb"
+
+Input: s = "a"
+Output: "a"
+
+Input: s = "ac"
+Output: "a"
+*/
+
 string fillup(string str)
 {
 	for (int i = 0; i < str.length(); i += 2)
